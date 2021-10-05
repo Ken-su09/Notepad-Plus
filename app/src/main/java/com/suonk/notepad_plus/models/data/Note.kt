@@ -22,6 +22,6 @@ data class Note(
     @ColumnInfo(name = "isDeleted")
     var isDeleted: Int,
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true)
-    var id: Int
+    var id: Int = 0
 
 )

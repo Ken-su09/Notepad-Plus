@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
 import com.suonk.notepad_plus.R
 import com.suonk.notepad_plus.databinding.FragmentMainBinding
@@ -21,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private var binding: FragmentMainBinding? = null
+    private lateinit var addNewNoteButton: FloatingActionButton
 
     private val viewModel: NoteViewModel by activityViewModels()
 
@@ -34,12 +36,14 @@ class MainFragment : Fragment() {
     }
 
     private fun initializeUI() {
+        addNewNoteButton = binding!!.addNewNoteButton
         setupViewPager()
         searchBarTextListener()
+        addNewNoteButtonClick()
     }
 
     private fun searchBarTextListener() {
-        binding!!.searchContactEditText.addTextChangedListener(object : TextWatcher {
+        binding!!.searchNoteEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence?,
                 start: Int,
@@ -57,7 +61,7 @@ class MainFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                viewModel.setSearchBarText(binding!!.searchContactEditText.text.toString())
+                viewModel.setSearchBarText(binding!!.searchNoteEditText.text.toString())
             }
         })
     }
@@ -86,6 +90,12 @@ class MainFragment : Fragment() {
                 }
             }
         }.attach()
+    }
+
+    private fun addNewNoteButtonClick() {
+        addNewNoteButton.setOnClickListener {
+            (activity as MainActivity).showAddNewNote()
+        }
     }
 
     override fun onDestroyView() {

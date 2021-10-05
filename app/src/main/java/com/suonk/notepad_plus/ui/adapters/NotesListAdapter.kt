@@ -1,14 +1,19 @@
 package com.suonk.notepad_plus.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.suonk.notepad_plus.databinding.ItemNoteBinding
 import com.suonk.notepad_plus.models.data.Note
+import com.suonk.notepad_plus.ui.fragments.main_pages.AllNotesFragment
+import com.suonk.notepad_plus.ui.fragments.main_pages.FavoriteNotesFragment
 
-class NotesListAdapter : ListAdapter<Note, NotesListAdapter.ViewHolder>(NotesComparator()) {
+class NotesListAdapter(private val fragment: Fragment) :
+    ListAdapter<Note, NotesListAdapter.ViewHolder>(NotesComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -17,13 +22,23 @@ class NotesListAdapter : ListAdapter<Note, NotesListAdapter.ViewHolder>(NotesCom
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val note = getItem(position)
-        holder.onBind(note)
+        holder.onBind(note, position)
     }
 
-    inner class ViewHolder(private var binding: ItemNoteBinding) :
+    inner class ViewHolder(private val binding: ItemNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(note: Note) {
 
+        fun onBind(note: Note, position: Int) {
+            binding.itemNoteTitle.text = note.title
+            binding.itemNoteContent.text = note.content
+            binding.itemNoteDate.text = note.date
+
+            binding.root.setOnClickListener {
+                when (fragment.tag) {
+                    "f0" -> (fragment as AllNotesFragment).goToNoteDetails(position)
+//                "f1" -> (fragment as FavoriteNotesFragment).goToNoteDetails(position)
+                }
+            }
         }
     }
 
@@ -36,6 +51,5 @@ class NotesListAdapter : ListAdapter<Note, NotesListAdapter.ViewHolder>(NotesCom
             return oldItem.title == newItem.title &&
                     oldItem.content == newItem.content
         }
-
     }
 }

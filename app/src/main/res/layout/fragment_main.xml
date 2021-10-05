@@ -27,7 +27,7 @@
                 app:srcCompat="@drawable/ic_search" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/search_contact_edit_text"
+                android:id="@+id/search_note_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@color/transparent"
@@ -60,6 +60,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_new_note_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

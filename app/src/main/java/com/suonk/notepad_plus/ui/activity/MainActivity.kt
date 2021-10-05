@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         coordinator.showSplashScreen()
     }
 
-    private fun startMainFragment() {
+    fun startMainFragment() {
         coordinator.showMainFragment()
     }
 
